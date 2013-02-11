@@ -1,0 +1,108 @@
+<?php
+$pppadvers = $ppp;
+$bonus = 0; /* бонус поинтов */
+
+/* работа скрипта */
+
+$sTitle .= 'Рекламодателям';
+
+$temp_content = '<h1>Рекламодателям</h1>';
+
+$temp_content .= '<p><b>Показ вашего объявления на всех страницах проекта в течении 1 недели -  </b>10 рублей (при заказе от 1 месяца - скидки!)</p>';
+
+if (isset($_SESSION['sess_user']))
+{
+
+	/* проверка баланса */
+	$balance = mysql_query("select * from balance where uid='$uID'");
+
+	if (mysql_num_rows($balance) == 0 )
+	{ /* создать кошелек пользователю */
+		$new = mysql_query("insert into balance (uid, point) values ('$uID', '$bonus')") or die(mysql_error());
+		$point = $bonus;
+	} else
+	{ /* проверка баланса на поинты */
+		$point = mysql_result($balance, 0, "point"); $rublik = mysql_result($balance, 0, "rublik");
+	}
+
+	if ( $rublik >= 10 ) { $temp_content = '<h1>Рекламодателям</h1><p><b>Показ вашего объявления на всех страницах проекта в течении 1 недели -  </b>10 рублей (при заказе от 1 месяца - скидки!)<br /><a class="sColor" href="/adver-allsite">Заказать</a></p>'; }
+
+	if ( $point < 20 ) { $temp_content .= '<p>Простите, но у вас на счету нет средств для заказа рекламы! <a class="sColor" href="/pay-in">Пополнить баланс</a> .</p>'; } else
+	{	$points = $point; /* - комиссия за заказ */ $colview = $sUSERS; //  floor( * 1.3)		
+		
+		if ( !isset($_POST['cost']) )
+		{	$error = 1; $pcost = 1; $pallclick = $points; $pviews = 2;
+			$atitle = 'Название сайта'; $acomment = 'Краткое описание сайта'; $alink = 'http://адрес вашего сайта';
+		} else
+		{
+			$pcost = $_POST['cost']; $pallclick = $_POST['allclick']; $pviews = $_POST['views'];
+			$atitle = $_POST['atitle']; $acomment = $_POST['acomment']; $alink = $_POST['alink'];
+
+			if ( $atitle == 'Название сайта' ) { $error = 1; } if ( $acomment == 'Краткое описание сайта' ) { $error = 1; }
+			if ( $alink == 'http://адрес вашего сайта' ) { $error = 1; }
+
+			if ( !is_numeric($pcost) || !is_numeric($pallclick) || !is_numeric($pviews) ) { $error = 1; }
+			if ( $pcost == 0 || $pallclick == 0 || $pviews == 0 ) { $error = 1; } if ( $pallclick * $pcost > $points  ) { $error = 1; }
+			if ( $pallclick < 10 ) { $error = 1; $pallclick = 10; } if ( $pviews < 1 ) { $pviews = 1; }
+
+			if ( $error == 1 ) { $temp_content = '<h1>Рекламодателям</h1><p style="color: red;">Ошибка при обработке заказа!</p>'; } else
+			{
+				$point = $point - ( $pallclick * $pcost );
+				$paid2out = 0 - 145;
+				$user_update = mysql_query("update balance set point='$point', paid2out='$paid2out' where uid='$uID'") or die(mysql_error());
+				$activ = 'yes';
+				$adate = date("Y-m-d");
+				$atime = date("H:i:s");
+				$new = mysql_query("insert into aclick (uid, aclick, acost, aday, active, atitle, alink, acomment, date, time) values ('$uID', '$pallclick', '$pcost', '$pviews', '$activ', '$atitle', '$alink', '$acomment', '$adate', '$atime')") or die(mysql_error());
+
+				$temp_content = '<h1>Рекламодателям: ваш заказ обработан</h1><p style="color: green;">Вы успешно добавили ссылку: <a href="'.$alink.'">'.$alink.'</a></p><p><b>'.$atitle.'</b>: '.$acomment.'</p><p>Всего переходов: '.$pallclick.'</p><p>Цена перехода: '.$pcost.'</p><p>Количество доступных переходов на пользователя в сутки: '.$pviews.'</p>';
+			}
+			
+			
+
+		}
+
+
+		if ( $error == 1 )
+		{
+		
+		$temp_content .= '<script type="text/javascript"> point = '.$points.';
+		function tekcosts()
+		{ 	thecost = document.getElementById("cost"); thecost.value = Math.floor( thecost.value );
+			if ( thecost.value < 1 ) { thecost.value = 1; }
+			theallclick = document.getElementById("allclick"); theallclick.value = Math.floor( theallclick.value );
+			if ( theallclick.value > point ) { theallclick.value = point; } if ( theallclick.value < 10 ) { theallclick.value = 10; }
+			theviews = document.getElementById("views"); theviews.value = Math.floor( theviews.value );
+			if ( theviews.value < 1 ) { theviews.value = 1; } if ( thecost.value * theallclick.value > point ) { thecost.value = Math.floor( point / theallclick.value ); }
+		}
+	</script>
+		
+		
+		<p>Вы можете прямо сейчас заказать до '.$points.' переходов на свой сайт! Всего пользователей: '.$colview.'</p>';
+
+		$temp_content .= '<form method="post" action="/advers">
+<div class="forms"><div class="left">Название сайта:</div>
+<div class="right"><input type="text" id="atitle" name="atitle" value="'.$atitle.'" /></div></div>
+<div class="forms"><div class="left">Адрес сайта:</div>
+<div class="right"><input type="text" id="alink" name="alink" value="'.$alink.'" /></div></div>
+<div class="forms"><div class="left">Краткое описание сайта:</div>
+<div class="right"><input type="text" id="acomment" name="acomment" value="'.$acomment.'" /></div></div>
+<br />
+<div class="forms"><div class="left">Стоимость 1 просмотра:</div>
+<div class="right"><input type="text" onkeyup="this.value = this.value.replace (/\D/, 1)" onchange="tekcosts();" id="cost" name="cost" value="'.$pcost.'" /></div></div>
+
+<div class="forms"><div class="left">Количество просмотров:</div>
+<div class="right"><input type="text" onkeyup="this.value = this.value.replace (/\D/, 1)" onchange="tekcosts();" id="allclick" name="allclick" value="'.$points.'" /></div></div>
+<div class="forms"><div class="left">В сутки на посетителя:</div>
+<div class="right"><input type="text" onkeyup="this.value = this.value.replace (/\D/, 1)" onchange="tekcosts();" id="views" name="views" value="'.$pviews.'" /></div></div>
+		<div class="forms"><div class="left"></div><div class="right"><input type="submit" id="sptbtn" class="btn" value="Продолжить" /></div></div></form>';
+		
+		}
+
+	}
+} else { /* вывод информации */ $temp_content .= '<p>По вопросам приобретения рекламы обращайтесь через <a class="sColor" href="/support">обратную связь</a>.</p>'; }
+
+$iContent = $temp_content;
+
+
+?>

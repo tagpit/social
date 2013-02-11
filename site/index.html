@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+        <meta name="MobileOptimized" content="240" />
+        <meta name="HandheldFriendly" content="true" />
+        <link rel="shortcut icon" href="http://static.webid.in/pic/logo.png" />
+        <title><?php echo $sTitle; ?></title>
+
+<style type="text/css">
+        
+    body { padding: 0; margin: 0;}
+        .noResize { margin: 0 5px 0 5px; }
+        .showingmenu { display: block !important; }
+
+    img { border: none; }
+   #tLogo span, .sColor { color: rgb(70, 112, 150); }
+            
+    #pTop { position: fixed; top: 0; left: 0; right: 0; height: 50px; background-color: rgb(0, 0, 0); }
+    
+    #pLogo { height: 49px; padding: 0; margin: 0; border-bottom: 1px double #aaa; }
+    #tLogo, #menubtn { text-decoration: none; display: inline-block; }
+        #tLogo { color: rgb(255, 255, 255); font-family: Arial; font-size: xx-large; padding: 10px 2px 2px 2px; height: 38px; }
+            #tLogo span { font-family: 'Arial Black', Arial; font-weight: 900; }
+             /*  #tLogo span + span { font-family: Arial; } */ 
+        #menubtn { font-size: medium !important; padding: 15px 2px; float: right; color: #aaa; cursor: pointer; } #menubtn:hover { color:rgb(255, 255, 255); }
+
+        #tMenu ul { list-style-type: none; margin: 0; padding: 0; background-color: rgb(0, 0, 0); }
+        #tMenu li { display: none; border-bottom: 1px double #aaa; height: 50px; }
+
+            #tMenu a { color: #aaa; font-family: Verdana; text-decoration: none; padding: 17px 12px; display: block; }
+            #tMenu a:hover { color: rgb(255, 255, 255); text-decoration: underline; background-color: #333; border-bottom: 1px double #aaa; }
+
+            #tMenu a.oppage { background-color: rgb(70, 112, 150); color: white; }
+            #tMenu a.oppage:hover { background-color: rgb(70, 112, 150); color: white; border-bottom: 0; text-decoration: none; padding: 17px 12px; }
+            
+    #pPage { margin-top: 60px; min-height: 200px; }
+
+    .user_p a { padding: 5px; }
+
+    p { word-wrap: break-word; } 
+    
+    
+    #pEnd { border-top: 1px double #111; }
+       
+    @media screen and ( min-device-width: 1024px ) {
+        
+        body { min-width: 800px;
+               background-color: rgb(70, 112, 150);
+             /*  rgb(59, 143, 224) background-color: rgb(186, 149, 26); background: -moz-radial-gradient(circle, rgb(88, 50, 252), rgb(186, 149, 26));
+                background: -webkit-radial-gradient(circle, rgb(88, 50, 252), rgb(186, 149, 26)); background: -o-radial-gradient(circle, rgb(88, 50, 252), rgb(186, 149, 26));
+                background: -ms-radial-gradient(circle, rgb(88, 50, 252), rgb(186, 149, 26)); background: radial-gradient(circle, rgb(88, 50, 252), rgb(186, 149, 26)); */
+             }
+        
+            .noResize { margin: 0 auto 0 auto; width: 84%; min-width: 960px; }
+
+        a { -webkit-transition: color 0.7s ease; -moz-transition: color 0.7s ease; -ms-transition: color 0.7s ease; -o-transition: color 0.7s ease; transition: color 0.7s ease; }
+        
+        /* header */
+        #pLogo { height: 50px; border: none; }
+        #pLogo, #tMenu { display: inline-block; }
+            #tLogo { padding-top: 2px; }
+            #menubtn { display: none; }
+            
+        #tMenu { float: right; }
+            #tMenu a { font-size: small; }
+            
+        #tMenu ul { display: inline-block; }
+            #tMenu li { display: inline-block; margin-left: 2px; border-bottom: none; height: 50px; }
+                #tMenu li a { }
+                    #tMenu li a:hover { background-color: #111; border-bottom: none; padding-bottom: 15px; }
+                    
+        /* paper */
+        #pPage { padding: 5px;  }
+
+        #pContent, #pAdver { display: inline-block; }   #pAdver { width: 220px; float: right; text-align: center; }
+        
+        #pContent { width: 75%; width: -webkit-calc(100% - 240px); width: -moz-calc(100% - 240px); width: calc(100% - 240px);
+                    background: rgba(255, 255, 255, 0.45); border-radius: 5px; padding: 5px;
+        }
+        
+        #pContent h1 { padding: 0 10px; font-variant: small-caps; color: #fff; text-shadow: 1px 1px 2px #888; font-size: x-large; }
+
+            #pContent h1 a { font-size: medium; }
+        
+		#pContent h5 { padding: 0 10px; font-variant: small-caps; color: #666; text-shadow: 1px 1px 2px #eee; font-size: small; }
+
+        #pContent p { padding: 0 10px; font-size: medium; color: #555; }
+
+        
+    .user_p { background-color: #aaa; width: 250px; max-width: 250px; min-height: 50px; color: #333; display: inline-block; margin: 5px; padding: 5px; }
+    .user_p a { display: inline-block; color: #333; min-width: 200px; text-decoration: none; padding: 5px; margin: 5px 0; }
+    .user_p a + a { display: block; }
+    
+        .user_p:hover { background-color: rgb(186, 149, 26); }
+            .user_p a + a:hover {  text-decoration: underline; color: green; }
+
+       
+        
+    .forms .right, .forms .left { display: inline-block; }
+        .forms .info { font-size: small; }
+        .forms .left { width: 175px; padding: 10px; vertical-align: top; text-align: right; color: #555;  }
+        .forms .right { width: 475px; padding: 5px;  }
+    .right input { width: 300px; padding: 5px; }
+    .right textarea { width: 465px; max-width: 465px; max-height: 400px; padding: 5px; }
+    .right input.btn { width: 100px; }
+
+
+        .uPhoto { display: inline-block; width: 200px; min-height: 260px; margin: 15px 10px; border: 1px solid #bbb; text-align: center; vertical-align: top; }
+        #pContent h5.uNoPhoto { font-size: 150px; margin: 0; color: #999; }
+
+        .uinfolist { display: inline-block; width: 60%; width: -webkit-calc(100% - 240px); width: -moz-calc(100% - 240px); width: calc(100% - 240px); }
+
+        .uhr { border:0; height:1px; background-color:#bbb; }
+        
+        .clear { clear: both; display: block; overflow: hidden; visibility: hidden; width: 0; height: 0; }
+                    
+        /* footer */
+        #pEnd { position: fixed; bottom: 0; left: 0; right: 0; height: 45px; padding-top: 5px; border: none;
+                background-color: rgba(0,0,0,0.56); font-family: Verdana; font-size: small; color: #888; }
+                #pEnd p { display: inline-block; padding: 0 10px; } #pEnd p + p { float: right; font-family: Arial; }
+        #pEnd a { text-decoration: none; color: rgb(237, 28, 36); } #pEnd a:hover { text-decoration: underline; color: rgb(255, 127, 39);}   
+    }
+    
+    
+            
+</style>
+<script type="text/javascript">
+    showmnu = 0;
+    showmenu = function () {
+        var btn = document.getElementById("menubtn"); var colitems = document.getElementById("tMenu").getElementsByTagName("Li").length;
+        if (showmnu == 0)
+        {   for (var i = 0; i <= colitems - 1; i++)
+            { document.getElementById("tMenu").getElementsByTagName("Li")[i].className = "showingmenu"; } showmnu++; btn.innerText = "- меню"; btn.title = "скрыть меню";
+        } else
+        {   for (var i = 0; i <= colitems - 1; i++)
+            { document.getElementById("tMenu").getElementsByTagName("Li")[i].className = ""; } showmnu = 0; btn.innerText = "+ меню"; btn.title = "показать меню";
+        }
+    }
+
+    onload = function () {
+        if (window.innerHeight > 500) { onresize(); }
+       try { if (document.getElementById('refresh') != null) { location.hash = '#refresh'; setTimeout('reloadmsg()', 10000); } } catch(e) {  }
+    }
+
+    onresize = function () {
+      //  if (window.innerHeight > 500) { paper = document.getElementById('pContent'); paper.style.minHeight = (window.innerHeight - 140) + 'px'; }
+    }
+
+    // window.onhashchange = function () { }
+
+    reloadmsg = function () {
+        /*  if (document.getElementById('message').value == '')
+         { location.hash = ''; location.replace("http://webid.in" + location.pathname); } else { setTimeout('reloadmsg()', 10000); }*/
+        process(); setTimeout('reloadmsg()', 10000);
+
+    }
+
+    var send_msg = 0;
+
+	var xmlHttp = createXmlHttpRequestObject();
+
+	function createXmlHttpRequestObject() {
+	    var xmlHttp;
+	    try { xmlHttp = new XMLHttpRequest(); } catch (e) {
+	        var XmlHttpVersions = new Array("MSXML2.XMLHTTP.6.0", "MSXML2.XMLHTTP.5.0", "MSXML2.XMLHTTP.4.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP");
+	        for (var i = 0; i < XmlHttpVersions.length && !xmlHttp; i++) {
+	            try { xmlHttp = new ActiveXObject(XmlHttpVersions[i]); } catch (e) { }
+	        }
+	    }
+	    if (!xmlHttp) document.getElementById('msgtek').innerHTML += '<p>Произошла ошибка. Пожалуйста, обновите браузер!</p>'; else return xmlHttp;
+	}
+
+	function process(abc) {
+	    if (xmlHttp) {
+	        try
+	        {
+	            var ulink = location.pathname.split("/")[1];
+
+	            if (abc == null)
+	            {
+	                var params = 'xml=xml_' + encodeURIComponent(ulink);
+	            } else
+	            {
+                    // отправка сообщения
+	                var params = 'xml=xml_' + encodeURIComponent(ulink) + '&message=' + encodeURIComponent(document.getElementById('message').value);
+	                document.getElementById('sptbtn').disabled = true;
+	                document.getElementById('message').disabled = true;
+	               // location.hash = '';
+	                send_msg = 1;
+	            }
+
+	            
+
+    	        xmlHttp.open("POST", "index.php", true); xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	            xmlHttp.onreadystatechange = handleRequestStateChange; xmlHttp.send(params);
+
+	        } catch (e) { document.getElementById('msgtek').innerHTML += '<p>Ошибка соединения с сервером!</p>'; }
+	    }
+	}
+
+	function handleRequestStateChange() {
+	    if (xmlHttp.readyState == 4) { if (xmlHttp.status == 200) { try { handleServerResponse(); } catch (e) { alert("Ошибка чтения ответа от сервера: " + e.toString()); } } }
+	}
+
+	function handleServerResponse() {
+	    var xmlResponse = xmlHttp.responseXML; if (!xmlResponse || !xmlResponse.documentElement) throw ("Ошибка обработки данных:\n" + xmlHttp.responseText);
+	    var rootNodeName = xmlResponse.documentElement.nodeName; if (rootNodeName == "parsererror") throw ("Ошибка обработки данных:\n" + xmlHttp.responseText);
+	    xmlRoot = xmlResponse.documentElement; if (rootNodeName != "response" || !xmlRoot.firstChild) throw ("Ошибка обработки данных:\n" + xmlHttp.responseText);
+
+	    responseText = xmlRoot.firstChild.data;
+
+	    if (responseText != "nonetext_xmlmsgsend=0") {
+
+	        msg_text = responseText.split("_xmlmsgsend=");
+	        xmlsendmsg = msg_text[1];
+	        msg_text = msg_text[0];
+
+	        nomsg = '<p>Сообщений нет</p>';
+
+	        if (msg_text == nomsg) { document.getElementById('msgtek').innerHTML = msg_text; } else {
+	            if (document.getElementById('msgtek').innerHTML != nomsg) {
+	                document.getElementById('msgtek').innerHTML += msg_text;
+	            } else { document.getElementById('msgtek').innerHTML = msg_text; }
+	        }
+	        location.hash = '#refresh';
+
+	        if (send_msg == 1) {
+	            if (xmlsendmsg = 1) {
+	                document.getElementById('message').value = '';
+	                document.getElementById('sptbtn').disabled = false;
+	                document.getElementById('message').disabled = false;
+	               
+	                send_msg = 0;
+	            } else {
+	                process(12);
+	            }
+	        }
+
+	    }
+	    
+	}
+
+    
+</script>
+
+</head>
+<body>
+
+    <div id="pTop">
+        <div class="noResize">
+            <div id="pLogo">
+                <a id="tLogo" href="/"><img style="margin-right:5px" src="http://static.webid.in/pic/logo.png" alt="webid.in" /><span>WEB</span>id.in</a>
+                <a id="menubtn" onclick="showmenu();" title="показать меню">+ меню</a>
+
+            </div>
+            <div id="tMenu">
+                <?php echo $iMenu; ?>
+            </div>
+        </div>
+    </div>
+    <div id="pPage" class="noResize">
+        <div id="pContent"><?php echo $iContent; ?>
+            <br />
+            <br />
+            
+        </div>
+        <div id="pAdver"><?php echo $iAdver; ?></div>
+    </div>
+    <br /><br /><br />
+    <div id="pEnd">
+        <div class="noResize">
+            <p>По всем вопросам обращайтесь: <a id="link-support" href="/support">обратная связь</a></p><p>Создано в 2012 году.</p>
+        </div>
+    </div>
+
+</body>
+</html>
